@@ -39,6 +39,15 @@ final class ListingSelector
     }
 
     /**
+     * Selects all listing which are approved but not finished yet.
+     * @return array
+     */
+    public function getUndoneCheckedListings(): array
+    {
+        return $this->repository->fetchUndoneCheckedListing();
+    }
+
+    /**
      * Selects all listings.
      * @return array
      */

@@ -84,11 +84,25 @@ final class ListingRepository
     {
         $statement = $this->connection->query("
             SELECT * FROM ab_listings
-            WHERE done_at IS NULL
+            WHERE done_at IS NULL AND checked_at IS NULL
             ORDER BY created_at DESC LIMIT 1");
         $statement->setFetchMode(PDO::FETCH_CLASS, ListingData::class);
         $listing =  $statement->fetch(PDO::FETCH_CLASS);
         return $listing === false ? null : $listing;
+    }
+
+    /**
+     * Selects all listings which are checked but not done yet.
+     * @return array
+     */
+    public function fetchUndoneCheckedListing(): array
+    {
+        $sql = "
+            SELECT * FROM ab_listings
+            WHERE checked_at IS NOT NULL AND done_at IS NULL";
+        $statement = $this->connection->query($sql);
+        $statement->setFetchMode(PDO::FETCH_CLASS, ListingData::class);
+        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
     /**
