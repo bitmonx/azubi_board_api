@@ -44,6 +44,8 @@ final class ItemCreator
                             string $deadline)
     : int
     {
+
+        $deadline = substr($deadline, 0, 10);
         $created_at = Chronos::now();
         return $this->repository->insertItem($listingId, $description, $created_at, $userId, $deadline);
     }

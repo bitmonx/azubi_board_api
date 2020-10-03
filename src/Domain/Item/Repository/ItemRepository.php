@@ -47,7 +47,7 @@ final class ItemRepository
         string $deadline): int
     {
         $sql = "INSERT INTO ab_items (listing_id, description, created_at, created_by, deadline)
-                VALUE (:listing, :description, :created_at, :user, :deadline)";
+                VALUE (:listing, :description, :created_at, :user, DATE(:deadline))";
 
         $this->connection->prepare($sql)->execute([
             'listing' => $listingId,

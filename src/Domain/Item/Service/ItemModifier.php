@@ -38,6 +38,7 @@ final class ItemModifier
      */
     public function editItem(int $id, string $description, string $deadline): bool
     {
+        $deadline = substr($deadline, 0, 10);
         return $this->repository->updateItem($id, $description, $deadline);
     }
 
