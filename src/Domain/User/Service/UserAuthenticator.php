@@ -25,14 +25,20 @@ final class UserAuthenticator
     private $repository;
 
     /**
+     * @var $checkAuth
+     */
+    private $checkAuth;
+
+    /**
      * UserAuthenticator constructor.
      * @param LdapLogin $ldap
      * @param UserRepository $repository
      */
-    public function __construct(LdapLogin $ldap, UserRepository $repository)
+    public function __construct(LdapLogin $ldap, UserRepository $repository, bool $checkAuth)
     {
         $this->ldap = $ldap;
         $this->repository = $repository;
+        $this->checkAuth = $checkAuth;
     }
 
     /**
@@ -45,7 +51,7 @@ final class UserAuthenticator
      */
     public function authenticate(string $username, string $password): ?UserData
     {
-        if (!$this->ldap->ldapLogin($username, $password)) {
+        if ($this->checkAuth && !$this->ldap->ldapLogin($username, $password)) {
             return null;
         }
 

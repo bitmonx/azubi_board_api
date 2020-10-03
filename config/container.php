@@ -1,6 +1,8 @@
 <?php
 
 use App\Database\DatabaseProxy;
+use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\Service\UserAuthenticator;
 use App\Mail\Mailer;
 use Selective\BasePath\BasePathMiddleware;
 use Psr\Container\ContainerInterface;
@@ -98,6 +100,14 @@ return [
         $sender = $config['sender'];
         $userSelector = $container->get(\App\Domain\User\Service\UserSelector::class);
 
-        return new \App\Mail\Mailer($sender, $userSelector);
+        return new Mailer($sender, $userSelector);
+    },
+    UserAuthenticator::class => function (ContainerInterface $container)
+    {
+        $config = $container->get('settings')['auth'];
+        $ldap = $container->get(LdapLogin::class);
+        $repository = $container->get(UserRepository::class);
+
+        return new UserAuthenticator($ldap, $repository, $config['check']);
     }
 ];

@@ -10,6 +10,11 @@ date_default_timezone_set('Europe/Berlin');
 // Settings
 $settings = [];
 
+// Check auth settings
+$settings['auth'] = [
+    'check' => true
+];
+
 // Path settings
 $settings['root'] = dirname(__DIR__);
 $settings['temp'] = $settings['root'] . '/tmp';
