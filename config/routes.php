@@ -23,6 +23,7 @@ use Slim\Routing\RouteCollectorProxy;
  */
 return static function (App $app) {
     $app->get('/test', TestAction::class);
+    $app->options('test', PreflightAction::class);
     $app->post('/login', TokenCreateAction::class);
     $app->options('/login', PreflightAction::class);
     $app->group('/listings', function (RouteCollectorProxy $group) {
