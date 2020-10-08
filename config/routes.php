@@ -1,5 +1,6 @@
 <?php
 
+use App\Action\Alerts\AlertAction;
 use App\Action\Auth\TokenCreateAction;
 use App\Action\Item\ItemCreateAction;
 use App\Action\Item\ItemDeleteAction;
@@ -23,10 +24,8 @@ use Slim\Routing\RouteCollectorProxy;
  * @param App $app
  */
 return static function (App $app) {
-    $app->get('/test', TestAction::class);
-    $app->options('test', PreflightAction::class);
-    $app->post('/login', TokenCreateAction::class);
-    $app->options('/login', PreflightAction::class);
+    $app->map(['GET', 'OPTIONS'], '/test', TestAction::class);
+    $app->map(['POST', 'OPTIONS'], '/login', TokenCreateAction::class);
     $app->group('/listings', function (RouteCollectorProxy $group) {
         $group->group('', function (RouteCollectorProxy $group) {
             $group->post('', ListingCreateAction::class);
@@ -52,5 +51,10 @@ return static function (App $app) {
         })->add(JwtAuthMiddleware::class);
         $group->options('[/{id:[0-9]+}]', PreflightAction::class);
         $group->options('/edit/{id:[0-9]+}', PreflightAction::class);
+    });
+    $app->group('/alerts', function (RouteCollectorProxy $group) {
+        $group->get('/{type}', AlertAction::class)
+            ->add(JwtAuthMiddleware::class);
+        $group->options('/{type}', PreflightAction::class);
     });
 };

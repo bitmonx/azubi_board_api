@@ -33,6 +33,7 @@ final class UserAuthenticator
      * UserAuthenticator constructor.
      * @param LdapLogin $ldap
      * @param UserRepository $repository
+     * @param bool $checkAuth
      */
     public function __construct(LdapLogin $ldap, UserRepository $repository, bool $checkAuth)
     {
