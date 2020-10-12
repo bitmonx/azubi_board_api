@@ -33,7 +33,7 @@ class AlertAction extends \App\Action\AppAction
                 'subject' => 'Azubi-Board: Getränke-Alarm',
                 'mail' => 'Bitte den Getränkekühlschrank auffüllen.'
             ]);
-            $this->responseData('Alert triggered!');
+            $this->responseData->build('Alert triggered!');
             return $this->respond($response, 204);
         }
         if ($args['type'] === 'kitchen') {
@@ -41,7 +41,7 @@ class AlertAction extends \App\Action\AppAction
                 'subject' => 'Azubi-Board: Küchen-Alarm',
                 'mail' => 'Bitte die Küche aufräumen.'
             ]);
-            $this->responseData('Alert triggered!');
+            $this->responseData->build('Alert triggered!');
             return $this->respond($response, 204);
         }
         if ($args['type'] === 'approving') {
@@ -49,7 +49,7 @@ class AlertAction extends \App\Action\AppAction
                 'subject' => 'Azubi-Board: Genehmigungs-Alarm',
                 'mail' => 'Ein dringendes Element wurder der aktuellen Liste hinzugefügt. Bitte die Liste prüfen.'
             ]);
-            $this->responseData('Alert triggered!');
+            $this->responseData->build('Alert triggered!');
             return $this->respond($response, 204);
         }
         return $this->respond($response, 204);
